@@ -1,22 +1,26 @@
+# installed required libraries
 from tkinter import *
 from string import ascii_uppercase
 import random
 from tkinter import messagebox
 
+# show window
 window = Tk()
 window.title("PYTHON | HANGMAN")
-window.resizable(width=False, height=False)
-
 width = window.winfo_screenwidth()
 height = window.winfo_screenheight()
 x = int(width / 2 - 600 / 2)
 y = int(height / 2 - 400 / 2)
 str1 = "594x399+" + str(x) + "+" + str(y)
 window.geometry(str1)
-footer = Label(text="© 2020 Tech Tutor. All Right Reserved", bg = "white")
+footer = Label(text="© 2020 Tech Tutor. All Right Reserved", bg="white")
 footer.config(font=('Courier', 11, 'bold'))
 footer.place(x=x - 222, y=y + 190)
 
+# disable the resize of the window
+window.resizable(width=False, height=False)
+
+# list of words
 word_list = ['ABACK', 'ABAFT', 'ABANDONED', 'ABASHED', 'ABERRANT', 'ABHORRENT', 'ABIDING', 'ABJECT', 'ABLAZE', 'ABLE',
              'ABNORMAL', 'ABOARD', 'ABORIGINAL', 'ABORTIVE', 'ABOUNDING', 'ABRASIVE', 'ABRUPT', 'ABSENT', 'ABSORBED',
              'ABSORBING', 'ABSTRACTED', 'ABSURD', 'ABUNDANT', 'ABUSIVE', 'ACCEPTABLE', 'ACCESSIBLE', 'ACCIDENTAL',
@@ -278,13 +282,14 @@ word_list = ['ABACK', 'ABAFT', 'ABANDONED', 'ABASHED', 'ABERRANT', 'ABHORRENT', 
              'WHISTLE', 'WINK', 'WIPE', 'WISH', 'WOBBLE', 'WONDER', 'WORK', 'WORRY', 'WRAP', 'WRECK', 'WRESTLE',
              'WRIGGLE', 'X-RAY', 'YAWN', 'YELL', 'ZIP', 'ZOOM']
 
+# images to create dashes for each wrong guess
 photos = [PhotoImage(file="images/hang0.png"), PhotoImage(file="images/hang1.png"), PhotoImage(file="images/hang2.png"),
           PhotoImage(file="images/hang3.png"), PhotoImage(file="images/hang4.png"), PhotoImage(file="images/hang5.png"),
           PhotoImage(file="images/hang6.png"), PhotoImage(file="images/hang7.png"), PhotoImage(file="images/hang8.png"),
           PhotoImage(file="images/hang9.png"), PhotoImage(file="images/hang10.png"),
           PhotoImage(file="images/hang11.png")]
 
-
+# create newgame function to start a new game
 def newgame():
     global the_word_withSpaces
     global numberOfGuesses
@@ -294,7 +299,7 @@ def newgame():
     the_word_withSpaces = " ".join(the_word)
     label_word.set(" ".join("_" * len(the_word)))
 
-
+# create the guess function for guessing each letter.
 def guess(letter):
     global numberOfGuesses
     if numberOfGuesses < 11:
@@ -322,6 +327,7 @@ img_label.config(image=photos[0])
 label_word = StringVar()
 Label(window, textvariable=label_word, font=("Conscias 24 bold")).grid(row=0, column=3, columnspan=6, padx=10)
 
+# create alphabet from A to Z
 n = 0
 for c in ascii_uppercase:
     Button(window, text=c, command=lambda c=c: guess(c), font=("Helvetica 18"), width=4).grid(row=1 + n // 9,
@@ -330,6 +336,5 @@ for c in ascii_uppercase:
 
 Button(window, text="New \n Game", command=lambda: newgame(), font=("Helvetica 10 bold")).grid(row=3, column=8,
                                                                                                sticky="NSWE")
-
 newgame()
 window.mainloop()
