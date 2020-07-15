@@ -4,8 +4,18 @@ import random
 from tkinter import messagebox
 
 window = Tk()
-window.title ("Hangman @_tech_tutor")
-window.resizable(width = False, height =  False)
+window.title("PYTHON | HANGMAN")
+window.resizable(width=False, height=False)
+
+width = window.winfo_screenwidth()
+height = window.winfo_screenheight()
+x = int(width / 2 - 600 / 2)
+y = int(height / 2 - 400 / 2)
+str1 = "594x399+" + str(x) + "+" + str(y)
+window.geometry(str1)
+footer = Label(text="© 2020 Tech Tutor. All Right Reserved", bg = "white")
+footer.config(font=('Courier', 11, 'bold'))
+footer.place(x=x - 222, y=y + 190)
 
 word_list = ['ABACK', 'ABAFT', 'ABANDONED', 'ABASHED', 'ABERRANT', 'ABHORRENT', 'ABIDING', 'ABJECT', 'ABLAZE', 'ABLE',
              'ABNORMAL', 'ABOARD', 'ABORIGINAL', 'ABORTIVE', 'ABOUNDING', 'ABRASIVE', 'ABRUPT', 'ABSENT', 'ABSORBED',
@@ -271,16 +281,19 @@ word_list = ['ABACK', 'ABAFT', 'ABANDONED', 'ABASHED', 'ABERRANT', 'ABHORRENT', 
 photos = [PhotoImage(file="images/hang0.png"), PhotoImage(file="images/hang1.png"), PhotoImage(file="images/hang2.png"),
           PhotoImage(file="images/hang3.png"), PhotoImage(file="images/hang4.png"), PhotoImage(file="images/hang5.png"),
           PhotoImage(file="images/hang6.png"), PhotoImage(file="images/hang7.png"), PhotoImage(file="images/hang8.png"),
-          PhotoImage(file="images/hang9.png"), PhotoImage(file="images/hang10.png"),PhotoImage(file="images/hang11.png")]
+          PhotoImage(file="images/hang9.png"), PhotoImage(file="images/hang10.png"),
+          PhotoImage(file="images/hang11.png")]
+
 
 def newgame():
     global the_word_withSpaces
     global numberOfGuesses
     numberOfGuesses = 0
-    img_label.config(image = photos[0])
+    img_label.config(image=photos[0])
     the_word = random.choice(word_list)
     the_word_withSpaces = " ".join(the_word)
-    label_word.set(" ".join("_"*len(the_word )))
+    label_word.set(" ".join("_" * len(the_word)))
+
 
 def guess(letter):
     global numberOfGuesses
@@ -293,27 +306,30 @@ def guess(letter):
                     guessed[c] = letter
                 label_word.set("".join(guessed))
                 if label_word.get() == the_word_withSpaces:
-                    messagebox.showinfo("Hangman TECH TUTOR", "You won the Game")
+                    messagebox.showinfo("Hangman", "You won the Game")
                     newgame()
         else:
             numberOfGuesses += 1
-            img_label.config(image = photos[numberOfGuesses])
+            img_label.config(image=photos[numberOfGuesses])
             if numberOfGuesses == 11:
-                messagebox.showwarning("Hangman TECH TUTOR", "Sorry, Game Over ")
+                messagebox.showwarning("Hangman", "Sorry, Game Over ")
+
 
 img_label = Label(window)
-img_label.grid(row = 0, column = 0, columnspan = 3, padx = 10, pady = 40)
-img_label.config(image = photos[0])
+img_label.grid(row=0, column=0, columnspan=3, padx=10, pady=40)
+img_label.config(image=photos[0])
 
 label_word = StringVar()
-Label(window, textvariable = label_word, font = ("Conscias 24 bold")).grid(row = 0, column = 3, columnspan = 6 , padx = 10)
+Label(window, textvariable=label_word, font=("Conscias 24 bold")).grid(row=0, column=3, columnspan=6, padx=10)
 
 n = 0
 for c in ascii_uppercase:
-    Button(window, text = c,  command = lambda c=c: guess(c), font =("Helvetica 18"), width = 4).grid(row = 1+n//9, column = n%9)
+    Button(window, text=c, command=lambda c=c: guess(c), font=("Helvetica 18"), width=4).grid(row=1 + n // 9,
+                                                                                              column=n % 9)
     n += 1
 
-Button(window, text = "New \n Game", command  = lambda:newgame(), font = ("Helvetica 10 bold")).grid(row = 3 , column = 8, sticky = "NSWE")
+Button(window, text="New \n Game", command=lambda: newgame(), font=("Helvetica 10 bold")).grid(row=3, column=8,
+                                                                                               sticky="NSWE")
 
 newgame()
 window.mainloop()
